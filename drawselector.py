@@ -11,6 +11,8 @@ t.width(2)
 #3.size
 #4.starting
 
+
+
 def goldyboi():
     global size1
     t.speed(1000)
@@ -25,7 +27,22 @@ def goldyboi():
         t.forward(1)
         t.left(222.5)
     x = 0
-    t.width(1)
+    t.width(2)
+
+def wildgoldyboi():
+    global size1
+    t.speed(1000)
+    for x in range(size1):
+        t.width(1)
+        t.forward(x)
+        t.pd()
+        t.forward(1)
+        t.left(222.5)
+    x = 0
+    t.width(2)
+
+
+
 
 def circleboi():
     global size1
@@ -68,6 +85,7 @@ def spwxs():
     t.width(2)
 
 
+
 def whatcolor():
     colors = ["firebrick", "black", "slate blue", "salmon", "chartreuse"]
     cs = input("""What color do you want to use?
@@ -89,6 +107,7 @@ def whatshape():
                   2 = Shape with x sides
                   3 = Circle
                   4 = Spiral with x sides
+                  5 = Wild Golden Spiral
                   : """)
     if shape == "1":
         goldyboi()
@@ -98,6 +117,8 @@ def whatshape():
         circleboi()
     elif shape == "4":
         spwxs()
+    elif shape == "5":
+        wildgoldyboi()
     else:
         whatshape()
 
