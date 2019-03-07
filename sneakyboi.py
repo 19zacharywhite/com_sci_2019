@@ -1,13 +1,13 @@
 import math
+import numpy
 msg = input("What message would you like to send :")
 shift = int(input("What size shift would you like to make? (positive numbers only):"))
 
 def shrink():
     global shift
     if shift > 36:
-        shift = shift - 36
-        shrink()
-        
+        shift = shift%36
+            
 shrink()
 
 for char in msg:
