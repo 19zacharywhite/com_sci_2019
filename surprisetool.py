@@ -3,7 +3,7 @@ import math
 import random as  r
 t = turtle.Pen()
 t.speed(2000)
-t.width(5)
+t.width(2)
 
 x1 = 0
 y1 = 200
@@ -14,10 +14,9 @@ y3 = -200
 xy1 = turtle.Vec2D(x1,y1)
 xy2 = turtle.Vec2D(x2,y2)
 xy3 = turtle.Vec2D(x3,y3)
-
 #it doesnt work fix
 #im trying to make the tri force fractal thing
-for x in range(0,10):
+for x in range(0,1000):
     pos = r.randint(1,3)
     t.pu()
     if pos == 1:
@@ -28,6 +27,5 @@ for x in range(0,10):
         trav = xy3 - t.pos()
     trav = trav * .5
     t.goto(trav)
-    t.pd
-    t.circle(1)
-
+    t.pd()
+    t.fd(1)
