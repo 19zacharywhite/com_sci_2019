@@ -22,6 +22,8 @@ suitd = {"c":"clubs",
         "s":"spades",
         "h":"hearts",
         }
+airt = 0
+stage = 0
 acetotal = 0
 aiacetotal = 0
 c=1
@@ -29,9 +31,9 @@ total=0
 aitotal=0
 aistop = 14
 def inputdecksetting():
-    deckmode = input("Do you want to play a game of Blackjack? y/n:")
-    if deckmode == "y":
-        sdmstart()
+    print("Get ready to play Blackjack!")
+    sdmstart()
+    pa()
     
 def aicarddrawsdm():
     global c
@@ -39,6 +41,8 @@ def aicarddrawsdm():
     global deck
     global aiacetotal
     global aistop
+    global stage
+    global airt
     if aitotal < 17:
         cnum = r.randint(0,(51-c))
         card = deck[cnum]
@@ -47,6 +51,13 @@ def aicarddrawsdm():
             if x in "cdsh":
                 num = card.replace(x,'')
         aitotal = aitotal + int(num)
+        if stage == 0:
+            airt = aitotal
+            aitotal = aitotal - int(num)
+        else:
+            airt = airt + int(num)
+        stage = stage + 1
+        
         #if num == 1:
         #    aiacetotal = aiacetotal + 1
         for x in card:
@@ -58,12 +69,17 @@ def aicarddrawsdm():
         suit = "".join(suit)
         num = [numbers.get(num)]
         num = "".join(num)
-        print("The AI drew a " + num + " of " + suit + ".")
-        print("The AI has a total of " + str(aitotal) + ".")
+        if stage > 1:
+            print("The AI drew a " + num + " of " + suit + ".")
+            print("The AI has a total of at least " + str(aitotal) + ".")
+        else:
+            print("The AI drew an unknown card.")
+            print("The AI has an unknown total.")
         c = c+1
     else:
         print("The AI did not draw a new card.")
-        print("Their total is still" + aitotal)
+        print("Their total is still at least " + str(aitotal))
+    print("\n")
 
 def carddrawsdm():
     global c
@@ -90,6 +106,7 @@ def carddrawsdm():
     print("You drew a " + num + " of " + suit + ".")
     c=c+1
     print("Your total is now " + str(total) + ".")
+    print("\n")
 def sdmstart():
     yn = input("Do you want to draw a card? y/n :")
     if yn == "y":
@@ -97,28 +114,48 @@ def sdmstart():
         carddrawsdm()
         if total > 21:
             print("You went over 21. You lose.")
-        elif aitotal > 21:
+        elif airt > 21:
             print("The AI went over 21. You win.")
-        elif total == 21 and aitotal == 21:
+        elif total == 21 and airt == 21:
             print("Double Blackjack! It's a tie!")
-        elif total == 21 and aitotal < 21:
+        elif total == 21 and airt < 21:
             print("Blackjack! You win!")
-        elif aitotal == 21 and total < 21:
+        elif airt == 21 and total < 21:
             print("AI has Blackjack! You lose.")
         else:
             sdmstart()
     elif yn == "n":
         gameover()
 def gameover():
-    if aitotal < 14:
+    if airt < 14 and total >= airt:
         aicarddrawsdm()
         gameover()
-    elif aitotal > total:
-        print("The AI wins.")
-    elif aitotal < total and aitotal > 13 :
-        print("You win.")
-    elif aitotal == total:
+    elif airt > total:
+        print("The AI wins. They had a total of " + str(airt) + ".")
+    elif airt < total and airt > 13 :
+        print("You win. The AI had a total of " + str(airt) + ".")
+    elif airt == total:
         print("You and the AI have tied")
+def pa():
+    global airt
+    global aitotal
+    global total
+    global c
+    global stage
+    global deck
+    deck = ["1c", "2c", "3c", "4c", "5c", "6c", "7c", "8c", "9c", "10c", "11c", "12c", "13c", "1d", "2d", "3d", "4d", "5d", "6d", "7d", "8d", "9d", "10d", "11d", "12d", "13d", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h", "13h", "1s", "2s", "3s", "4s", "5s", "6s", "7s", "8s", "9s", "10s", "11s", "12s", "13s"]
+    airt = 0
+    aitotal = 0
+    total = 0
+    c = 0
+    stage = 0
+    yn = input("Do you want to play again? y/n:")
+    if yn == "y":
+        print("-------------------------------- \n")
+        inputdecksetting()
+    else:
+        print("Goodbye!")
+        
 inputdecksetting()
 
 
