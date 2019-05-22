@@ -29,7 +29,7 @@ aiacetotal = 0
 c=1
 total=0
 aitotal=0
-aistop = 14
+aistop = 16
 def inputdecksetting():
     print("Get ready to play Blackjack!")
     sdmstart()
@@ -110,7 +110,10 @@ def carddrawsdm():
 def sdmstart():
     yn = input("Do you want to draw a card? y/n :")
     if yn == "y":
-        aicarddrawsdm()
+        if airt <= 16 and airt < total:
+            aicarddrawsdm()
+        else:
+            print("The AI waits.")
         carddrawsdm()
         if total > 21:
             print("You went over 21. You lose.")
@@ -127,7 +130,7 @@ def sdmstart():
     elif yn == "n":
         gameover()
 def gameover():
-    if airt < 14 and total >= airt:
+    if airt < 16 and total >= airt:
         aicarddrawsdm()
         gameover()
     elif airt > total:
